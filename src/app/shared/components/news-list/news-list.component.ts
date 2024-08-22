@@ -33,6 +33,7 @@ export class NewsListComponent implements OnInit {
   fetchArticles() {
     const apiUrl = `https://newsapi.org/v2/everything?q=tesla&from=2024-07-22&sortBy=publishedAt&apiKey=20496940acdb42648933dce9c9fe6542`;
     this.http.get(apiUrl).subscribe((response: any) => {
+      
       this.articles = response.articles;
       this.filterArticles();
     });
