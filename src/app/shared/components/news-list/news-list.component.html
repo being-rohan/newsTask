@@ -1,0 +1,50 @@
+<mat-card>
+  <mat-card-header>
+    <!-- Search Box -->
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input matInput [(ngModel)]="searchQuery" (ngModelChange)="filterArticles()" placeholder="Search news">
+    </mat-form-field>
+
+    <!-- Country Filter -->
+    <mat-form-field>
+      <mat-label>Country</mat-label>
+      <mat-select [(ngModel)]="selectedCountry" (ngModelChange)="filterArticles()">
+        <mat-option *ngFor="let country of countries" [value]="country.code">
+          {{ country.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Date Range Filter -->
+    <mat-form-field>
+      <mat-label>From</mat-label>
+      <input matInput [matDatepicker]="fromDatePicker" [(ngModel)]="fromDate" (ngModelChange)="filterArticles()" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>To</mat-label>
+      <input matInput [matDatepicker]="toDatePicker" [(ngModel)]="toDate" (ngModelChange)="filterArticles()" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #toDatePicker></mat-datepicker>
+    </mat-form-field>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Container for News Cards -->
+    <div class="mat-card-container">
+      <mat-card *ngFor="let article of filteredArticles" (click)="viewDetails(article)">
+        <mat-card-header>
+          <mat-card-title>{{ article.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <img mat-card-image [src]="article.urlToImage" *ngIf="article.urlToImage">
+          <p>{{ article.description }}</p>
+          <mat-card-subtitle>Author: {{ article.author }}</mat-card-subtitle>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-card-content>
+</mat-card>
